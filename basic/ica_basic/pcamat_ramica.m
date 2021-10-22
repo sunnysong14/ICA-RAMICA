@@ -1,9 +1,11 @@
-function [E, D] = pcamatLY(TX, firstEig, lastEig, s_interactive)
+function [E, D] = pcamat_ramica(TX, firstEig, lastEig, s_interactive)
 % Log:
-%   LY extends this function for tensor "TX". The random components are
-%   vectors, and is used to separate images. 
-% For AAAI from 07/15/2016
+%   Liyan extends the original pcamat() so that it can be used for for data
+%   tensor TX. In this scenario, the random components are vectors, and is
+%   used to separate 2D image data. 
+% Liyan Song: songly@sustech.edu.cn
 %  
+% ===================================================================
 %PCAMAT - Calculates the pca for data
 %
 % [E, D] = pcamat(TX, firstEig, lastEig, ... 
@@ -48,7 +50,6 @@ function [E, D] = pcamatLY(TX, firstEig, lastEig, s_interactive)
 
 % @(#)$Id: pcamat.m,v 1.5 2003/12/15 18:24:32 jarmo Exp $
 
-%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Default values:
 if nargin < 4, s_interactive = 'off'; end
 if nargin < 3, lastEig = size(TX, 1); end
@@ -56,7 +57,7 @@ if nargin < 2, firstEig = 1; end
 
 s_verbose = 'off';  %<-- LY add.
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Check the optional parameters;
 switch lower(s_verbose)
  case 'on'
@@ -89,13 +90,13 @@ if ~(b_interactive)
   end
 end
 
-%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Calculate PCA
 
 % Calculate the covariance matrix.
 if b_verbose, fprintf ('Calculating covariance...\n'); end
 
-%%%%%%%%%%%%%% LY: Covariance matrix %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% Covariance matrix %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 N = ndims(TX) - 1; % The order of samples.
 [nMix, dimXi, numSpl] = size(TX); % dimXi: dim of random vector; nMix: #(mixture)
 
@@ -112,29 +113,7 @@ elseif N == 2 % if "TX" is real matrices, use my definition.
         TXtX(:,:,t) = TX(:,:,t) * TX(:,:,t)'/dimXi;
     end
     covarianceMatrix = mean(TXtX, N+1); % E[X'X]/dim(x_i). Note: TX is zero-mean.
-
-% %     % Way-2 Cov(vx_i, vx_j)=1/p*cov(vx_i'*vx_j) by MATLAB cov(). i.e. this way
-% %     % calculate Cov-matrix vector by vector.
-% %     for i = 1 : nMix % i-th x
-% %         for j = i : nMix % j-th x; Note: it is symmetric.
-% %             for k = 1 : dimXi
-% %                 Xik = TX(i,k,:); Xik = Xik(:);
-% %                 Xjk = TX(j,k,:); Xjk = Xjk(:);
-% %                 Cov_ijk_mat = cov([Xik, Xjk]);
-% %                 Cov_ij(k) = Cov_ijk_mat(1,2); % off-diagonal value is Cov(x_i(k), x_j(k))
-% %             end
-% %             CovX(i,j) = mean(Cov_ij);
-% %         end
-% %     end
-% %     % for lower-part of covariance matrix
-% %     DiagCovX = diag(CovX);
-% %     CovX = CovX + CovX' - diag(DiagCovX);
-    % %%%%%%%%%%% Liyan description %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    % The two ways of calculating covariance matrix of random matrix X should
-    % lead to the same result. But the results are similar but not exactly the
-    % same. I guess the difference may be caused by numerical issue. 
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-     
+    
 else
     error('This function only copes with up to 2D images.')
 end
@@ -198,7 +177,7 @@ if b_interactive == 1
   close(hndl_win);
 end
 
-%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Interactive part - GUI
 if b_interactive == 2
 
@@ -381,8 +360,6 @@ if b_verbose
 end
 
 
-%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 function newMatrix = selcol(oldMatrix, maskVector)
 

@@ -26,7 +26,7 @@ function ret = AmariIndex(A, W)
     
     M = W*A;
     
-    %% Test to see if we have a valid matrix for decomposition
+    % Test to see if we have a valid matrix for decomposition
     % Soft fail for an invalid matrix will be taken as N-1 (cap of Amari index)
     try
         svals = svd(M);
@@ -42,7 +42,7 @@ function ret = AmariIndex(A, W)
     end
     M = abs(M);
 
-    %% Actually compute the Amari index.
+    % Actually compute the Amari index.
     M_row_maxs = max(M, [], 2);
     M_col_maxs = max(M, [], 1);
     

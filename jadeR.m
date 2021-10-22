@@ -68,8 +68,7 @@ function B =  jadeR(X, m)
 % IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT 
 % OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-%% prepare
-
+% prepare
 verbose	= 0 ;	% Set to 0 for quiet operation
 
 % Finding the number of sources
@@ -86,15 +85,13 @@ if verbose
     fprintf('jade -> Looking for %d sources\n',m);
 end 
 
-% to do: add a warning about complex signals
-%% Centering
-%=============
+% Centering =============
 if verbose
     fprintf('jade -> Removing the mean value\n'); 
 end 
 X	= X - mean(X')' * ones(1,T);
-%% whitening & projection onto signal subspace
-%   ===========================================
+
+% whitening & projection onto signal subspace =========
 if verbose, 
     fprintf('jade -> Whitening the data\n'); 
 end
@@ -132,7 +129,8 @@ clear U D Ds k PCs scales ;
 if verbose
     fprintf('jade -> Estimating cumulant matrices\n'); 
 end
-%% Reshaping of the data, hoping to speed up things a little bit...
+
+% Reshaping of the data, hoping to speed up things a little bit...
 X = X';
 
 dimsymm 	= (m*(m+1))/2;      % Dim. of the space of real symm matrices
@@ -145,7 +143,7 @@ Xijm		= zeros(m,1);       % Temp
 Uns         = ones(1,m);        % for convenience
 % I am using a symmetry trick to save storage.  I should write a short note one of these
 % days explaining what is going on here.
-%%
+
 Range     = 1:m ; % will index the columns of CM where to store the cumulant matrices.
 
 for im = 1 : m
@@ -238,7 +236,7 @@ end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %}
-%% Joint diagonalization of the cumulant matrices
+% Joint diagonalization of the cumulant matrices
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Init
@@ -288,7 +286,8 @@ ton	= 0 ;
 toff	= 0 ;
 theta	= 0 ;
 Gain    = 0 ;
-%% Joint diagonalization proper
+
+% Joint diagonalization proper ============
 if verbose
     fprintf('jade -> Contrast optimization by joint diagonalization\n'); 
 end

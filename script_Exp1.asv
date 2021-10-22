@@ -6,7 +6,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % synthetic experimental setup
-ica_name_cell = {'infomax', 'FastICA', 'jade', 'ramica'};
+ica_name_cell = {'infomax', 'FastICA', 'jade', 'ours'};
 syn_data_name = 'tdistr'; 
 nb_source = 4; 
 nb_dimension = 32; 
@@ -15,7 +15,7 @@ seed_array = 1:10;
 noise_level = 0;  % [0:0.01:0.1,0.15,0.2]
 
 % main run
-amari_errors_runs = nan*ones(length(ica_name_cell), length(seed_array));  % init
+amari_methods = nan*ones(length(ica_name_cell), length(seed_array));  % init
 for ic = 1 : length(ica_name_cell)
     ica_name = lower(ica_name_cell{ic});
     for ss = 1 : length(seed_array)
@@ -56,36 +56,36 @@ for ic = 1 : length(ica_name_cell)
         % run ICA method
         switch lower(ica_name)
             case 'fastica'
-                [sources_recover, ~, A_recover] = fastica(mixture_mat);
+                [RTS_est, ~, Ainv_est] = fastica(mixture_mat);
             case 'jade'
-                A_recover = jadeR(mixture_mat);
-                sources_recover = A_recover * mixture_mat;
+                Ainv_est = jadeR(mixture_mat);
+                RTS_est = Ainv_est * mixture_mat;
             case 'infomax'
-                A_recover = infomaxICA(mixture_mat);
-                sources_recover = A_recover * mixture_mat;
-            case lower('ramica')
-                [A_recover, source_tensor_recover] = ramica(mixture_tensor_noisy);
-                sources_recover = source_tensor_recover;
+                Ainv_est = infomaxICA(mixture_mat);
+                RTS_est = Ainv_est * mixture_mat;
+            case lower('ours')
+                [Ainv_est, TS_est] = ramica(mixture_tensor_noisy);
+                RTS_est = TS_est;
             otherwise
                 error('No such ICA method.');
         end%switch
 
         % Amari error
-        if size(A_recover,1)<size(A,1) || sum(sum(isnan(A_recover)))>0 
+        if size(Ainv_est,1)<size(A,1) || sum(sum(isnan(Ainv_est)))>0 
             % if cannot fully recover all the resouces
             amari = nan;                    
         else  % if fully recovery
-            amari = AmariIndex(A, A_recover);
+            amari = AmariIndex(A, recov);
         end
-        amari_errors_runs(ic, ss) = amari;
+        amari_methods(ic, ss) = amari;
     end%seed
 end%ica
 
 % ave amari error across seeds. 
-amari_errors_ave = nanmean(amari_errors_runs, 2);
+ave_amari_methods = nanmean(amari_methods, 2);
 fprintf("p_noise is %0.3f, the amari errors of ICA methods are as below\n", noise_level);
-amari_errors_ave
-fprintf("Suceed!\n")
+ave_amari_methods
+
 
 
 
