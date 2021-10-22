@@ -26,7 +26,7 @@ A quick start of running the implementation of the proposed RAMICA can refer to 
 
 For example, if the experimental setup is as below:
 
-
+```
 ica_name_cell = {'infomax', 'FastICA', 'jade', 'ramica'};
 syn_data_name = 'tdistr'; 
 nb_source = 4; 
@@ -34,10 +34,11 @@ nb_dimension = 32;
 nb_sample = 64;
 seed_array = 1:10;
 noise_level = 0;
-
+```
 
 The output should be expected as:
 
+```
 p_noise is 0.000, the amari errors of ICA methods are as below
 
 amari_errors_ave =
@@ -48,7 +49,19 @@ amari_errors_ave =
     4.6827
 
 Suceed!
+```
 
+Of course, people are free to change the experimental setup freely to play with this toy. 
+For example, if one wants to see the recovery results when suffering from the label noise level 0.1, one can set the experiment as
+
+```
+noise_level = 0.1;
+```
+
+Or if one want to conduct more runs than 10, the below setup can be set:
+```
+seed_array = 1:100;
+```
 
 
 
