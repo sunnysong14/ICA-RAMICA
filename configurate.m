@@ -1,4 +1,4 @@
-function MAKEUP()
+function configurate()
 % Configurate the folders and paths for this project. 
 % Please run this scirpt at first.
 % 
@@ -11,7 +11,7 @@ clear, clc
 addpath(genpath(['.', filesep]));    
 
 % screen
-fprintf('Exp environment set up accomplished. Have fun.\n') 
+fprintf('Experimental environment has been set up. Have fun.\n') 
 fprintf('Running in the file:\n\t%s.\n',pwd);
 
 end
