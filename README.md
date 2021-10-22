@@ -26,6 +26,7 @@ A quick start of running the implementation of the proposed RAMICA can refer to 
 
 For example, if the experimental setup is as below:
 
+
 ica_name_cell = {'infomax', 'FastICA', 'jade', 'ramica'};
 syn_data_name = 'tdistr'; 
 nb_source = 4; 
@@ -33,6 +34,7 @@ nb_dimension = 32;
 nb_sample = 64;
 seed_array = 1:10;
 noise_level = 0;
+
 
 The output should be expected as:
 
