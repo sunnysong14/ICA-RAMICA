@@ -24,6 +24,32 @@ A quick start of running the implementation of the proposed RAMICA can refer to 
     >> example_ramica()
 
 
+For example, if the experimental setup is as below:
+
+ica_name_cell = {'infomax', 'FastICA', 'jade', 'ramica'};
+syn_data_name = 'tdistr'; 
+nb_source = 4; 
+nb_dimension = 32; 
+nb_sample = 64;
+seed_array = 1:10;
+noise_level = 0;
+
+The output should be expected as:
+
+p_noise is 0.000, the amari errors of ICA methods are as below
+
+amari_errors_ave =
+
+    8.9652
+    6.4198
+    6.1490
+    4.6827
+
+Suceed!
+
+
+
+
 <p align="right">Enjoy~</p>
 
 <p align="right">Liyan Song</p>
