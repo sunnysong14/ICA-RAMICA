@@ -1,21 +1,18 @@
 # IndependentComponentAnalysis
  This repository contains the codes used for the following work: 
- 
+ ```
  Liyan Song, Shuo Zhou, and Haiping Lu. "Direct ICA on Data Tensor via Random Matrix Modeling".
+ ```
  
-Author of code: Liyan Song at Southern University of Science and Technology, China.
-Email: songly@sustech.edu.cn
-
 
 The code only requires basic Matlab libraries and a tensor toolbox, which can all be downloaded with a purchased Matlab licenses.
 
+
 There is one coding folder "matlab/" that contains the codes implementing the proposed method, namely RAMICA.
-
-
-To start the code, one needs to configure the files and paths by running the script "config.m" or type in the command window the following line
-
-    >> config()
-
+To start the code, one needs to configure the files and paths by running the script "config.m" or type in the command window the following line:
+```
+>> config()
+```
 This function configures the directories between code scripts and the data set and among all scripts, so that the scripts can call each other and load the data set as if they are in a one-layer directory.
 
 
@@ -64,9 +61,8 @@ seed_array = 1:100;
 ```
 
 
-
 <p align="right">Enjoy~</p>
 
-<p align="right">Liyan Song</p>
-
-<p align="right">October 2021</p>
+<p align="right">Liyan Song, June 2021</p>
+<p align="right">Email: songly@sustech.edu.cn</p>
+<p align="right">Southern University of Science and Technology, China</p>
