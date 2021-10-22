@@ -1,4 +1,4 @@
-function configurate()
+function config()
 % Configurate the folders and paths for this project. 
 % Please run this scirpt at first.
 % 
